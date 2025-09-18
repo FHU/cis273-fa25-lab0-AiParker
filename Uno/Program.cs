@@ -1,14 +1,25 @@
-﻿namespace Uno;
-
-public class Program
+﻿namespace Uno
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        Card card = new Card();
-        card.Type = CardType.Number;
-        card.Color = Color.Red;
-        card.Number = 3;
+        public static void Main(string[] args)
+        {
+            Card topCard = new Card { Type = CardType.Number, Color = Color.Red, Number = 10 };
 
-        Console.WriteLine(card.ToString() );
+            Player player = new Player { Name = "Alice" };
+            player.Hand.Add(new Card { Type = CardType.Number, Color = Color.Blue, Number = 10 });
+            player.Hand.Add(new Card { Type = CardType.Skip, Color = Color.Blue });
+            player.Hand.Add(new Card { Type = CardType.Wild, Color = Color.Wild });
+
+            Console.WriteLine($"Top Card: {topCard}");
+            Console.WriteLine($"{player.Name}'s hand:");
+            foreach (var c in player.Hand)
+                Console.WriteLine($" - {c}");
+
+            Console.WriteLine($"Has playable card? {player.HasPlayableCard(topCard)}");
+            Console.WriteLine($"First playable card: {player.GetFirstPlayableCard(topCard)}");
+            Console.WriteLine($"Most common color: {player.MostCommonColor()}");
+        }
     }
 }
+
